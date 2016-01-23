@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="set_utils.js"></script>
+    <script src="game_utils.js"></script>
+    <script src="gallows.js"></script>
+    <script src="game_obj.js"></script>
+    <script src="draw_game.js"></script>
+    <link rel='stylesheet' href='style.css'>
+    <title>Hangman</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+  </head>
+  <body>
+    <div class='container'>
+      <div class='row'>
+	<div class='col-md-6'>
+	  <h1>Lets play hangman!</h1>
+	</div>
+	<div class='col-md-6'></div>
+      </div>
+      <div class='row'>
+	<div class="col-md-12">
+	  <p class='lead' id="game-message">Message here</p>	  
+	</div>
+      </div>
+      <div class="row">
+	<div class='col-md-3'>
+	  <pre id='gallows'>
+	  </pre>
+	  <div class='row'>
+	    <div class="col-md-12">	      
+	    </div>
+	  </div>
+	</div>
+	<div class='col-md-3'>
+	  <div style='text-align:center;'>
+	    <p class='lead' id='display-word'>
+	      <strong>WDDDord here</strong>
+	    </p>
+	  </div>
+	  <hr>
+	  <del>
+	    <h4 id="guesses">e</h4>
+	  </del>
+	</div>
+	<div class='col-md-2'></div>
+      </div>
+    </div>
+  </body>
+  <script>
+    $(document).ready(function(){        
+	var lives = 4;
+	var words = ['words'];
+	var word = gameUtils.chooseWord(words);
+        console.log(word);
+       
+        $(document).keypress(function(e){
+          console.log(e.key);
+            if (!gameUtils.isLetter(e.key)){
+		return;
+	    }
+	    if (guesses.has(e.key)){
+		return;
+	    }
+	    guesses.add(e.key);
+	    game_obj = gameObj.init(word, guesses, lives);
+	    drawGame.drawGame(game_obj);
+	    if (gameUtils.isDead(word, guesses, lives)){
+		drawGame.drawDead(gallows.spasms);
+	    }
+	    if (gameUtils.hasWon(word, guesses)){
+		alert('won');
+	    }
+        });
+	var guesses = new Set([]);
+	game_obj = gameObj.init(word, guesses, lives);
+	drawGame.drawGame(game_obj);
+    });
+  </script>
+</html>

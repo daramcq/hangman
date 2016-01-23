@@ -1,0 +1,25 @@
+@media (min-width: 768px ) {
+  .row {
+      position: relative;
+        display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display:         flex;
+  }
+
+  .bottom-align-text {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+  }
+  .guess-box{
+      position: relative;
+      top: 50%;
+      transform: translateY(-50%);
+  }
+  hr{
+      width: 100%; 
+      color: black; 
+      height: 2px;
+      background-color: black;
+  }
