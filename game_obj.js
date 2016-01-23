@@ -1,30 +1,23 @@
-var gameObj = (function(){
-    
-    var getWord = function(word, guesses){
-	var getLetter= function(letter){
-	    console.log(word);
-	    if (guesses.has(letter)){
-		return letter;
-	    }else{
-		return "_";
-	    }
-	}
-	var display_letters = word.split('').map(getLetter);
-	return display_letters.join(' ');
-    };  
-    var init = function(word, guesses, lives){
-	
-	var display_word = getWord(word, guesses);
-	var wrong_guesses = gameUtils.incorrectGuesses(word, guesses);
-	var display_wrong_guesses = [...wrong_guesses].join(' ');
-	var gallows_sketch = gallows.stages[wrong_guesses.size];
-	
-	return { msg : "Ok, pick a letter!",
-		 lives : lives,
-		 gallows : gallows_sketch,
-		 word : display_word,
-		 wrong_guesses : display_wrong_guesses }
+var game = (function(){
+
+    var intersection = function(setA, setB){
+	return new Set([x for (x of setA) if (setB.has(x))]);
     }
-    return { init : init}
+    
+    var difference = function(setA, setB){
+	return new Set([x for (x of setA) if (!setB.has(x))]);
+    }
+    var Game = function(lives, word, guesses){	
+	this.lives = lives;
+	this.word = word;
+	this.guesses = guesses;
+	this.word_letters = new Set(this.word);
+	this.correct_guesses = intersection(this.guesses, this.word_letters);
+	this.incorrect_guesses = difference(this.guesses, this.word_letters);	
+	this.isDead = this.lives <= this.incorrect_guesses.size;
+	this.hasWon = this.correct_guesses.size == (this.word_letters.size);
+	return this;	
+    }
+    return { Game: Game };
 
 })();
