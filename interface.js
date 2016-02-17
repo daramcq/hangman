@@ -5,23 +5,20 @@ var interface = (function(){
 	var words = ['words','antelope','interlude'];
 	var word = chooseWord(words);
         var guesses = new Set([]);
-	var g = game.Game(lives, word, guesses);
-	var screen = drawGame.Screen(g);
-	drawGame.drawScreen(screen);
+	var game_obj = game.Game(lives, word, guesses);
+	var scr = screen.Screen(game_obj);
+	drawGame.drawScreen(scr);
 	$(document).keypress(function(e){
 	    handleInput(e);
         });
 	var handleInput = function(e){
-	    if (!isLetter(e.key)){
+	    if (!isLetter(e.key) || (game_obj.guesses.has(e.key))){
 		return;
 	    }
-	    if (game.guesses.has(e.key)){
-		return;
-	    }
-	    g = game.Game(g.lives, g.word, game.guesses.add(e.key));
-	    console.log(g);
-	    screen = drawGame.Screen(g);
-	    drawGame.drawScreen(screen);		
+	    game_obj = game.Game(game_obj.lives, game_obj.word, 
+				 game.guesses.add(e.key));
+	    scr = screen.Screen(game_obj);
+	    drawGame.drawScreen(scr);		
 	}
     }
     var chooseWord = function(words){
