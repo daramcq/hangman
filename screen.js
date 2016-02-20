@@ -10,24 +10,20 @@ var screen = (function(){
     
     var getMsg = function(game){
 	var msg = '';
-	if (game.hasWon){
+	if (game.has_won){
 	    msg = 'Congrats! You won!'
-	}else if (game.isDead){
+	}else if (game.is_dead){
 	    msg = 'Oh no, you\'re dead!';
 	}else{
 	    msg = 'Ok, press a key!';
 	}
 	return msg;
     }
-    
-    var getGallows = function(game){
-	return gallows.stages[game.incorrect_guesses.size];
-    }
 
     var Screen = function(game){	
 	this.msg = getMsg(game);
 	this.word = getWord(game);
-	this.gallows = getGallows(game);
+	this.gallows = gallows[game.incorrect_guesses.size];
 	this.wrong_guesses = [...game.incorrect_guesses].join(' ');
 
 	return this;

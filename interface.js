@@ -15,7 +15,7 @@ var interface = (function(){
     };    
 
     var init = function(){
-	var lives = 4;
+	var lives = 5;
 	var words = ['munificent','antelope','interlude', 
 		     'television', 'moribund', 'pabulum'];
 	var word = chooseWord(words);
@@ -23,15 +23,17 @@ var interface = (function(){
 	var game_obj = game.Game(lives, word, guesses);
 	var scr = screen.Screen(game_obj);
 	drawScreen(scr);
-	$(document).keypress(function(e){
-	    handleInput(e);
+	$(document).keypress(function(e){	
+	    handleInput(e);	  
         });
 	var handleInput = function(e){
 	    if (!isLetter(e.key) || (game_obj.guesses.has(e.key))){
 		return;
 	    }
-	    game_obj = game.Game(game_obj.lives, game_obj.word, 
-				 game.guesses.add(e.key));
+	    if (game_obj.is_dead || game_obj.has_won){
+		return;
+	    }
+	    game_obj = game_obj.addGuess(e.key);
 	    scr = screen.Screen(game_obj);
 	    drawScreen(scr);		
 	}
