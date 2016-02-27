@@ -16,8 +16,14 @@ var interface = (function(){
 
     var init = function(){
 	var lives = 5;
-	var words = ['munificent','antelope','interlude', 
-		     'television', 'moribund', 'pabulum'];
+	var words = ['munificent','interlude', 'cavalcade',
+		     'promontory', 'moribund', 'pabulum',
+		     'sinecure', 'vestments','illegitimate',
+		     'consummate', 'dialectical', 'corpulent',
+		     'duopoly', 'oligarchic', 'gavel',
+		     'edifice', 'verily', 'varlet',
+		     'venal', 'sacrosanct', 'purgative',
+		     'substantiate', 'corporeal', 'plenitude'];
 	var word = chooseWord(words);
         var guesses = new Set([]);
 	var game_obj = game.Game(lives, word, guesses);
